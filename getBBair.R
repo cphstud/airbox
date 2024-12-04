@@ -5,11 +5,11 @@ library(DBI)
 library(RMariaDB)
 
 # connect til db
-con <- dbConnect(MariaDB(),
-                 db="bboxair",
-                 user="root",
-                 password=Sys.getenv("pwdbair")
-                 )
+#con <- dbConnect(MariaDB(),
+#                db="bbair",
+#                 user="root",
+#                 password=Sys.getenv("pwdbair")
+#                 )
 
 #hente fly fra bbox
 #11.730979,55.365030,13.565696,55.966080
@@ -19,7 +19,7 @@ getUrl <- function(lamin,lomin,lamax,lomax) {
 }
 newurl=getUrl(55.365030,11.730979,55.966080,13.565696)
 
-resraw=GET(url=newurl,authenticate(user = "thorwulf",password=Sys.getenv("pwos")))
+resraw=GET(url=newurl,authenticate(user = "thorwulf",password=Sys.getenv("getairos")))
 resraw$status_code
 rescontent=content(resraw, as="text")
 reslist=fromJSON(rescontent)
@@ -28,6 +28,6 @@ cn=c("icao24","callsign","origin_country","time_position","last_contact","longit
 colnames(resdf)=cn
 
 fn=round(as.numeric(Sys.time()),0)
-saveRDS(resdf,paste0("flights_",fn,".rds"))
+saveRDS(resdf,paste0('C:/temp/flights_',fn,'.rds'))
 
 
